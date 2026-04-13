@@ -1,0 +1,10 @@
+{
+  "name": "cedict-sqlite-db",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^6.0.2"
+  }
+}
