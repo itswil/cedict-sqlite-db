@@ -1,7 +1,7 @@
 import { Database } from "bun:sqlite";
 
 const INPUT_FILE = "cedict_ts.u8";
-const DB_NAME = "cedict.db";
+const DB_NAME = "cedict.sqlite";
 
 async function convert() {
   const db = new Database(DB_NAME);

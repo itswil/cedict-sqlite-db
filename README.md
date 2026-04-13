@@ -13,12 +13,12 @@ bun install
 ```
 
 - Input file: `cedict_ts.u8`
-- Output file: `cedict.db`
+- Output file: `cedict.sqlite`
 
 ## Execution
 
 ```bash
-bun run convert.ts
+bun convert.ts
 ```
 
 ## Database Schema
