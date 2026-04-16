@@ -49,8 +49,7 @@ async function runConversion() {
     const match = line.match(entryRegex);
     if (match) {
       const [, trad, simp, pinyin, rawDefs] = match;
-      const pinyinNumber = convertPinyin(pinyin ?? "", { format: "symbolToNum" });
-      const pinyinAccented = convertPinyin(pinyin ?? "");
+      const pinyinAccented = convertPinyin(pinyin ?? "").replaceAll("5", "");
       batch.push({
         $trad: trad,
         $simp: simp,
