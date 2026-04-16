@@ -2,7 +2,8 @@
   "name": "cedict-sqlite-db",
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "pinyin-pro": "^3.28.1"
   },
   "peerDependencies": {
     "typescript": "^6.0.2"

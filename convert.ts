@@ -1,9 +1,10 @@
 import { Database } from "bun:sqlite";
+import { convert as convertPinyin } from "pinyin-pro";
 
 const INPUT_FILE = "cedict_ts.u8";
 const DB_NAME = "cedict.sqlite";
 
-async function convert() {
+async function runConversion() {
   const db = new Database(DB_NAME);
 
   // 1. Setup the Schema
@@ -14,6 +15,7 @@ async function convert() {
       traditional TEXT,
       simplified TEXT,
       pinyin TEXT,
+      pinyinNumber TEXT,
       definitions TEXT
     )
   `);
@@ -27,8 +29,8 @@ async function convert() {
 
   // 3. Prepare the insertion statement
   const insert = db.prepare(`
-    INSERT INTO dict (traditional, simplified, pinyin, definitions) 
-    VALUES ($trad, $simp, $pinyin, $defs)
+    INSERT INTO dict (traditional, simplified, pinyin, pinyinNumber, definitions) 
+    VALUES ($trad, $simp, $pinyin, $pinyinNum, $defs)
   `);
 
   // 4. Run as a transaction for massive speed gains
@@ -47,10 +49,13 @@ async function convert() {
     const match = line.match(entryRegex);
     if (match) {
       const [, trad, simp, pinyin, rawDefs] = match;
+      const pinyinNumber = convertPinyin(pinyin ?? "", { format: "symbolToNum" });
+      const pinyinAccented = convertPinyin(pinyin ?? "");
       batch.push({
         $trad: trad,
         $simp: simp,
-        $pinyin: pinyin,
+        $pinyin: pinyinAccented,
+        $pinyinNum: pinyin,
         $defs: (rawDefs ?? "").replace(/\//g, "; "),
       });
     }
@@ -67,4 +72,4 @@ async function convert() {
   db.close();
 }
 
-convert();
+runConversion();

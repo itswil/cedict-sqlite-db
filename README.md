@@ -2,6 +2,8 @@
 
 Converts the CC-CEDICT Chinese-English dictionary into a SQLite database.
 
+- Adds an additional column containing pinyin with accents
+
 ## Prerequistes
 
 - [Bun](https://bun.sh)
@@ -23,13 +25,14 @@ bun convert.ts
 
 ## Database Schema
 
-| Column       | Type   | Description                    |
-|--------------|--------|--------------------------------|
-| id           | INTEGER| Primary key                    |
-| traditional  | TEXT   | Traditional Chinese characters |
-| simplified   | TEXT   | Simplified Chinese characters  |
-| pinyin       | TEXT   | Pinyin pronunciation           |
-| definitions  | TEXT   | English definitions            |
+| Column       | Type    | Description                     |
+|--------------|-------- |-------------------------------- |
+| id           | INTEGER | Primary key                     |
+| traditional  | TEXT    | Traditional Chinese characters  |
+| simplified   | TEXT    | Simplified Chinese characters   |
+| pinyin       | TEXT    | Pinyin pronunciation (accented) |
+| pinyinNumber | TEXT    | Pinyin pronunciation (numbered) |
+| definitions  | TEXT    | English definitions             |
 
 Indexes are created on `simplified` and `traditional` columns for fast lookups.
 
